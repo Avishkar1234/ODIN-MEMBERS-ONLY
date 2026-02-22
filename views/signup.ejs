@@ -9,9 +9,9 @@
 <% } %>
 
 <form method="POST" action="/signup">
-    <input name="firstName" placeholder="First Name" required />
-    <input name="lastName" placeholder="Last Name" required />
-    <input name="email" type="email" placeholder="Email" required />
+    <input name="firstName" value="<%= oldInput.firstName || '' %>" placeholder="First Name" required />
+    <input name="lastName" value="<%= oldInput.lastName || '' %>" placeholder="Last Name" required />
+    <input name="email" value="<%= oldInput.email || '' %>" type="email" placeholder="Email" required />
     <input name="password" type="password" placeholder="Password" required />
     <input name="confirmPassword" type="password" placeholder="Confirm Password" required />
     <button type="submit">Sign Up</button>

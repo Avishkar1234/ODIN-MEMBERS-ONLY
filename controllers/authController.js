@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const { body, validationResult } = require("express-validator");
 
 exports.signup_get = (req, res) => {
-    res.render("signup", { errors: [] });
+    res.render("signup", { errors: [], oldInput: {} });
 }
 
 exports.signup_post = [
@@ -24,7 +24,10 @@ exports.signup_post = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.render("signup", { errors: errors.array() });
+            return res.render("signup",
+                 { errors: errors.array(),
+                    oldInput: req.body,
+                  });
         }
 
         try {
