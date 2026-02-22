@@ -1,5 +1,5 @@
 const express = require("express");
-const routes = express.Router();
+const router = express.Router();
 const authController = require("../controllers/authController")
 
 router.get("/signup", authController.signup_get);

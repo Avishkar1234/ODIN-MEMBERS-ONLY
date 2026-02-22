@@ -5,7 +5,7 @@ const app = express();
 
 const authRoutes = require("./routes/authRoutes");
 
-app.set("views engine", "ejs");
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));

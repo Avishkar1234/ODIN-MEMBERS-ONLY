@@ -35,7 +35,7 @@ exports.signup_post = [
                 VALUES ($1, $2, $3, $4)`,
                 [
                     req.body.firstName,
-                    req.body.lastname,
+                    req.body.lastName,
                     req.body.email,
                     hashedPassword,
                 ]
