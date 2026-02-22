@@ -1,0 +1,30 @@
+{
+  "name": "odin-members-only",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Avishkar1234/ODIN-MEMBERS-ONLY.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Avishkar1234/ODIN-MEMBERS-ONLY/issues"
+  },
+  "homepage": "https://github.com/Avishkar1234/ODIN-MEMBERS-ONLY#readme",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.18.0"
+  }
+}
