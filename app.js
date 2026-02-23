@@ -9,6 +9,7 @@ const pool = require("./config/db");
 const bcrypt = require("bcrypt");
 
 const authRoutes = require("./routes/authRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 
 const { ensureAuthenticated } = require("./middleware/authMiddleware");
 
@@ -77,26 +78,30 @@ passport.deserializeUser(async (id, done) => {
 
 app.use("/", authRoutes);
 
-app.get("/", (req, res) => {
-    if (req.user) {
-        res.send(`
-            <h1>Welcome ${req.user.first_name}</h1>
-            <a href="/dashboard">Dashboard</a>
-            <br>
-            `);
-    } else {
-        res.send(`
-            <h1>Home Page</h1>
-            <a href="/login">Login</a>
-            <br>
-            <a href="/signup">Sign Up</a>
-            `);
+app.get("/", async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT messages.*, users.first_name, users.last_name
+            FROM messages
+            JOIN users ON messages.user_id = users.id
+            ORDER BY created_at DESC`
+        );
+
+        res.render("home", {
+            user:req.user,
+            messages: result.rows,
+        });
+    } catch (err) {
+        console.error(err);
+        res.send("Error loading messages");
     }
 });
 
 app.get("/dashboard",  ensureAuthenticated, (req, res) => {
     res.send(`<h1>Dashboard for ${req.user.first_name}</h1>`);
 })
+
+app.use("/", messageRoutes);
 
 app.listen(3000, () =>{
     console.log("Server is running on port 3000")
