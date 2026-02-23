@@ -8,8 +8,10 @@ const LocalStrategy = require("passport-local").Strategy;
 const pool = require("./config/db");
 const bcrypt = require("bcrypt");
 
+//Routes
 const authRoutes = require("./routes/authRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const membershipRoutes = require("./routes/membershipRoutes")
 
 const { ensureAuthenticated } = require("./middleware/authMiddleware");
 
@@ -102,6 +104,7 @@ app.get("/dashboard",  ensureAuthenticated, (req, res) => {
 })
 
 app.use("/", messageRoutes);
+app.use("/", membershipRoutes);
 
 app.listen(3000, () =>{
     console.log("Server is running on port 3000")

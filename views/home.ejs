@@ -20,7 +20,7 @@
         <% if (user && user.is_member) { %>
             <small>
                 By <%= message.first_name %> <%= message.last_name %>
-                on <%= new Date(message.create_at).toLocaleString() %>
+                on <%= new Date(message.created_at).toLocaleDateString() %>
             </small>
         <% } %>
     </div>
