@@ -2,9 +2,19 @@
 
 <% if (user) { %>
     <p>Welcome <%= user.first_name %></p>
+
     <a href="/messages/new">Create Message</a>
-    <a href="/join">Join Club</a>
+
+    <% if (!user.is_member) { %>
+        <a href="/join">Join Club</a>
+    <% } %>
+
+    <% if (!user.is_admin) { %>
+        <a href="/admin">Become Admin</a>
+    <% } %>
+
     <a href="/logout">Logout</a>
+
 <% } else { %>
     <a href="/login">Login</a>
     <a href="/signup">Sign Up</a>
@@ -14,14 +24,22 @@
 
 <% messages.forEach(message => { %>
     <div style="border: 1px solid black; padding: 10px; margin: 10px 0px;">
+        
         <h3><%= message.title %></h3>
         <p><%= message.text %></p>
 
         <% if (user && user.is_member) { %>
             <small>
                 By <%= message.first_name %> <%= message.last_name %>
-                on <%= new Date(message.created_at).toLocaleDateString() %>
+                on <%= new Date(message.created_at).toLocaleString() %>
             </small>
         <% } %>
+
+        <% if (user && user.is_admin) { %>
+            <form method="POST" action="/messages/<%= message.id %>/delete">
+                <button type="submit">Delete</button>
+            </form>
+        <% } %>
+
     </div>
 <% }) %>

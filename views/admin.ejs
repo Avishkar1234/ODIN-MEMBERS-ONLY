@@ -1,0 +1,23 @@
+<h1>Become Admin</h1>
+
+<% if (error) { %>
+    <p style="color: red; font-weight: bold;"><%= error %></p>
+<% } %>
+
+<form method="POST" action="/admin">
+    <div style="margin-bottom: 10px;">
+        <label for="passcode">Enter Admin Passcode:</label><br>
+        <input 
+            type="password" 
+            id="passcode"
+            name="passcode" 
+            placeholder="Enter admin passcode" 
+            required 
+        />
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+<br>
+<a href="/">⬅ Back to Home</a>
