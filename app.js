@@ -10,6 +10,8 @@ const bcrypt = require("bcrypt");
 
 const authRoutes = require("./routes/authRoutes");
 
+const { ensureAuthenticated } = require("./middleware/authMiddleware");
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -77,11 +79,24 @@ app.use("/", authRoutes);
 
 app.get("/", (req, res) => {
     if (req.user) {
-        res.send(`<h1>Welcome ${req.user.first_name}</h1>`);
+        res.send(`
+            <h1>Welcome ${req.user.first_name}</h1>
+            <a href="/dashboard">Dashboard</a>
+            <br>
+            `);
     } else {
-        res.send("<h1>Home Page</h1>");
+        res.send(`
+            <h1>Home Page</h1>
+            <a href="/login">Login</a>
+            <br>
+            <a href="/signup">Sign Up</a>
+            `);
     }
 });
+
+app.get("/dashboard",  ensureAuthenticated, (req, res) => {
+    res.send(`<h1>Dashboard for ${req.user.first_name}</h1>`);
+})
 
 app.listen(3000, () =>{
     console.log("Server is running on port 3000")
