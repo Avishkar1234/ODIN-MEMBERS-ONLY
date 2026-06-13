@@ -1,47 +1,78 @@
 <link rel="stylesheet" href="/styles.css">
 
-<h1>Club House</h1>
+<div class="container">
 
-<% if (user) { %>
-    <p>Welcome <%= user.first_name %></p>
+<header class="hero">
+    <h1>🏠 Club House</h1>
 
-    <a href="/messages/new">Create Message</a>
+    <% if (user) { %>
+        <p class="welcome">
+            Welcome back, <strong><%= user.first_name %></strong>
+        </p>
 
-    <% if (!user.is_member) { %>
-        <a href="/join">Join Club</a>
+        <div class="nav-links">
+            <a class="btn" href="/messages/new">Create Message</a>
+
+            <% if (!user.is_member) { %>
+                <a class="btn secondary" href="/join">Join Club</a>
+            <% } %>
+
+            <% if (!user.is_admin) { %>
+                <a class="btn secondary" href="/admin">Become Admin</a>
+            <% } %>
+
+            <a class="btn danger" href="/logout">Logout</a>
+        </div>
+
+    <% } else { %>
+
+        <div class="nav-links">
+            <a class="btn" href="/login">Login</a>
+            <a class="btn secondary" href="/signup">Sign Up</a>
+        </div>
+
     <% } %>
+</header>
 
-    <% if (!user.is_admin) { %>
-        <a href="/admin">Become Admin</a>
-    <% } %>
-
-    <a href="/logout">Logout</a>
-
-<% } else { %>
-    <a href="/login">Login</a>
-    <a href="/signup">Sign Up</a>
+<% if (messages.length === 0) { %>
+    <div class="empty-state">
+        <h2>No messages yet</h2>
+        <p>Be the first person to post something.</p>
+    </div>
 <% } %>
 
-<hr>
-
 <% messages.forEach(message => { %>
-    <div style="border: 1px solid black; padding: 10px; margin: 10px 0px;">
-        
-        <h3><%= message.title %></h3>
-        <p><%= message.text %></p>
+
+    <div class="message-card">
+
+        <h3 class="message-title">
+            <%= message.title %>
+        </h3>
+
+        <p class="message-content">
+            <%= message.text %>
+        </p>
 
         <% if (user && user.is_member) { %>
-            <small>
+            <p class="message-meta">
                 By <%= message.first_name %> <%= message.last_name %>
-                on <%= new Date(message.created_at).toLocaleString() %>
-            </small>
+                • <%= new Date(message.created_at).toLocaleString() %>
+            </p>
         <% } %>
 
         <% if (user && user.is_admin) { %>
-            <form method="POST" action="/messages/<%= message.id %>/delete">
-                <button type="submit">Delete</button>
+            <form
+                method="POST"
+                action="/messages/<%= message.id %>/delete"
+            >
+                <button class="delete-btn" type="submit">
+                    Delete Message
+                </button>
             </form>
         <% } %>
 
     </div>
+
 <% }) %>
+
+</div>
