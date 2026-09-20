@@ -46,16 +46,6 @@ app.use(passport.session());
 
 app.set("trust proxy", 1);
 
-app.get("/debug-auth", (req, res) => {
-  res.json({
-    nodeEnv: process.env.NODE_ENV,
-    sessionSecretExists: !!process.env.SESSION_SECRET,
-    authenticated: req.isAuthenticated(),
-    user: req.user || null,
-    session: req.session || null,
-  });
-});
-
 passport.use(
   new LocalStrategy(
     { usernameField: "email" },
